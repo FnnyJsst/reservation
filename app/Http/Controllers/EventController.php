@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class EventController extends Controller
 {
@@ -12,7 +14,9 @@ class EventController extends Controller
      */
     public function index(): Response
     {
-        return response('Hello, World!');
+        return Inertia::render('Events/Index', [
+            //
+        ]);
     }
 
     /**
