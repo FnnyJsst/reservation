@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    //Permet de créer facilement des instances du modèle
     use HasFactory;
 
-    public function user()
+    protected $fillable = [
+        'content',
+        'event_id',
+    ];
+
+    public function event()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Event::class);
     }
 }

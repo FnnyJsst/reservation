@@ -9,61 +9,71 @@ use Inertia\Response;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(): Response
     {
+        $events = Event::with('city', 'venue')->paginate(10); // Paginate events
+
         return Inertia::render('Events/Index', [
-            //
+            'events' => $events,
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return Inertia::render('Events/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'city_id' => 'required|exists:cities,id',
+            'venue_id' => 'required|exists:venues,id',
+            'date' => 'required|date',
+        ], [
+            'city_id.exists' => 'The selected city is invalid.',
+            'venue_id.exists' => 'The selected venue is invalid.',
+        ]);
+
+        Event::create($request->only('name', 'description', 'city_id', 'venue_id', 'date'));
+
+        return redirect()->route('events.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+
+        return Inertia::render('Events/Edit', [
+            'event' => $event,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'city_id' => 'required|exists:cities,id',
+            'venue_id' => 'required|exists:venues,id',
+            'date' => 'required|date',
+        ], [
+            'city_id.exists' => 'The selected city is invalid.',
+            'venue_id.exists' => 'The selected venue is invalid.',
+        ]);
+
+        $event = Event::findOrFail($id);
+        $event->update($request->only('name', 'description', 'city_id', 'venue_id', 'date'));
+
+        return redirect()->route('events.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return redirect()->route('events.index');
     }
 }

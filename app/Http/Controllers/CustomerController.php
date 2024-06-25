@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the customers.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // Récupérer tous les clients
@@ -21,23 +16,12 @@ class CustomerController extends Controller
         return view('customers.index', compact('customers'));
     }
 
-    /**
-     * Show the form for creating a new customer.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         // Afficher le formulaire de création de client
         return view('customers.create');
     }
 
-    /**
-     * Store a newly created customer in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         // Valider les données du formulaire
@@ -74,37 +58,18 @@ class CustomerController extends Controller
             ->with('success', 'Customer created successfully.');
     }
 
-    /**
-     * Display the specified customer.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function show(Customer $customer)
     {
         // Afficher les détails d'un client spécifique
         return view('customers.show', compact('customer'));
     }
 
-    /**
-     * Show the form for editing the specified customer.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Customer $customer)
     {
         // Afficher le formulaire de modification de client
         return view('customers.edit', compact('customer'));
     }
 
-    /**
-     * Update the specified customer in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Customer $customer)
     {
         // Valider les données du formulaire
@@ -124,12 +89,6 @@ class CustomerController extends Controller
             ->with('success', 'Customer updated successfully.');
     }
 
-    /**
-     * Remove the specified customer from storage.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Customer $customer)
     {
         // Supprimer le client associé

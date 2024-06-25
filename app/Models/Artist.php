@@ -9,4 +9,11 @@ class Artist extends Model
 {
     //Permet de créer facilement des instances du modèle
     use HasFactory;
+
+    protected $fillable = ['name'];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }

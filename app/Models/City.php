@@ -18,8 +18,4 @@ class City extends Model
     {
         return $this->hasMany(Venue::class);
     }
-
-   /* public function events() {
-        return $this->hasMany(Event::class);
-    }*/
 }
