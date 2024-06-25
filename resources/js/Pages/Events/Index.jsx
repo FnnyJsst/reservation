@@ -19,7 +19,7 @@ export default function Index({ auth, events }) {
 
                 {events.map(event => (
                     <div key={event.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
-                        <h2 className="text-xl font-bold mb-2">{event.name}</h2>
+                        <h2 className="text-xl font-bold mb-2">{event.title}</h2>
                         <p className="text-gray-600 mb-2">{event.date}</p>
                         <p className="mb-4">{event.description}</p>
                     </div>

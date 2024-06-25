@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+Use App\Models\Event;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,9 +19,17 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'), // Remplacez 'password' par le mot de passe hashé souhaité
             ]);
         }
-
         $this->call([
             EventSeeder::class
         ]);
+    }
+}
+
+class EventSeeder extends Seeder
+{
+    public function run()
+    {
+        Event::factory()->count(10)->create();
+
     }
 }
