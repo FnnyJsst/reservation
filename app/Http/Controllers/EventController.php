@@ -11,10 +11,11 @@ class EventController extends Controller
 {
     public function index(): Response
     {
-        $events = Event::with('city', 'venue')->paginate(10); // Paginate events
+        $events = Event::all(); // Récupère tous les événements depuis la base de données
 
         return Inertia::render('Events/Index', [
             'events' => $events,
+        
         ]);
     }
 

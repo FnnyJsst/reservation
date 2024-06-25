@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-// DatabaseSeeder.php
-
 use Illuminate\Database\Seeder;
 use App\Models\User;
 
@@ -20,5 +18,9 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'), // Remplacez 'password' par le mot de passe hashé souhaité
             ]);
         }
+
+        $this->call([
+            EventSeeder::class
+        ]);
     }
 }

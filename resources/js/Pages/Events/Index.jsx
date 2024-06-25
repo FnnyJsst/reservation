@@ -5,6 +5,11 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Index({ auth, events }) {
+
+    if (!Array.isArray(events)) {
+        events = []; 
+    }
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Events" />
@@ -17,7 +22,6 @@ export default function Index({ auth, events }) {
                         <h2 className="text-xl font-bold mb-2">{event.name}</h2>
                         <p className="text-gray-600 mb-2">{event.date}</p>
                         <p className="mb-4">{event.description}</p>
-                       
                     </div>
                 ))}
 
