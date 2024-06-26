@@ -5,7 +5,7 @@ import { Head, Link } from '@inertiajs/react';
 export default function Index({ auth, events }) {
 
     if (!Array.isArray(events)) {
-        events = []; 
+        events = [];
     }
 
     return (
@@ -13,7 +13,12 @@ export default function Index({ auth, events }) {
             <Head title="Events" />
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-                <h1 className="text-2xl font-bold mb-4">All Events</h1>
+                <div className="flex justify-between items-center mb-4">
+                    <h1 className="text-2xl font-bold">All Events</h1>
+                    <Link href={route('events.create')} className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
+                        Create an Event
+                    </Link>
+                </div>
 
                 {events.map(event => (
                     <Link key={event.id} href={route('events.show', event.id)} className="block mb-4">

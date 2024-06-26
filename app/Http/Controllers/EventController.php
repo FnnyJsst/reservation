@@ -27,7 +27,7 @@ class EventController extends Controller
     public function show(string $id)
     {
         $event = Event::with(['city', 'venue'])->findOrFail($id);
-dd($event->toArray());
+//dd($event->toArray());
         return Inertia::render('Events/Show', [
             'event' => $event,
         ]);

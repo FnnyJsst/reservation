@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
         $existingUser = User::where('email', 'test@example.com')->first();
 
         if (!$existingUser) {
+            
             User::create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',
@@ -22,14 +23,5 @@ class DatabaseSeeder extends Seeder
         $this->call([
             EventSeeder::class
         ]);
-    }
-}
-
-class EventSeeder extends Seeder
-{
-    public function run()
-    {
-        Event::factory()->count(10)->create();
-
     }
 }
