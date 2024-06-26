@@ -70,7 +70,14 @@ console.log(data);
                         />
                         {errors.date && <p className="text-red-500 text-xs italic">{errors.date}</p>}
                     </div>
-
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
+                            City
+                        </label>
+                        <p id="city" className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            {city.name}
+                        </p>
+                    </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
                             Venue
@@ -85,21 +92,6 @@ console.log(data);
                         </select>
                         {errors.venue && <p className="text-red-500 text-xs italic">{errors.venue}</p>}
                     </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                            City
-                        </label>
-                        <p 
-                           
-                            id="city"
-
-                    
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        >{city.name}</p>
-                    
-                    </div>
-
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                             Description

@@ -58,10 +58,12 @@ class EventController extends Controller
 
     public function edit(string $id)
     {
-        $event = Event::findOrFail($id);
+        $event = Event::with(['city', 'venue'])->findOrFail($id);
 
         return Inertia::render('Events/Edit', [
             'event' => $event,
+            'venues' => $event->city->venues()->get(),
+            'cities' => City::all(),
         ]);
     }
 

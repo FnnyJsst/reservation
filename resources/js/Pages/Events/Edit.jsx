@@ -1,35 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function EditEvent({ auth, event, city }) {
-
+export default function EditEvent({ auth, event, venues, cities }) {
+    
     const { data, setData, put, errors } = useForm({
         title: event.title,
         date: event.date,
-        venue_id: event.venue ? event.venue.id : '',
-        city_id: city.id,
+        venue_id: event.venue_id,
+        city_id: event.city_id,
         description: event.description,
         artists: event.artists
     });
+
+    console.log(event);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         put(route('events.update', event.id), {
             onSuccess: () => {
-                console.log('Event updated successfully!');
+                // Handle success if needed
             },
-            onError: (errors) => {
-                console.error('Error updating event:', errors);
+            onError: () => {
+                // Handle error if needed
             }
         });
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title={`Edit Event - ${event.title}`} />
+            <Head title={`Edit ${event.title}`} />
 
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
+           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
 
                 <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
 
@@ -75,38 +77,29 @@ export default function EditEvent({ auth, event, city }) {
                         />
                         {errors.date && <p className="text-red-500 text-xs italic">{errors.date}</p>}
                     </div>
-
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cities">
+                            City
+                        </label>
+                        <p id="cities" className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            {cities.name}
+                        </p>
+                    </div>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
                             Venue
                         </label>
-                        <select 
-                            name="venue_id" 
-                            id="venue" 
+                        <select name="venue_id" id="venue" 
                             value={data.venue_id}
                             onChange={e => setData('venue_id', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        >
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <option value="">Select a venue</option>
-                            {city.venues.map(venue => (
+                            {venues.map(venue => (
                                 <option key={venue.id} value={venue.id}>{venue.name}</option>
                             ))}
                         </select>
                         {errors.venue_id && <p className="text-red-500 text-xs italic">{errors.venue_id}</p>}
                     </div>
-
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                            City
-                        </label>
-                        <p 
-                            id="city"
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        >
-                            {city.name}
-                        </p>
-                    </div>
-
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                             Description
@@ -123,14 +116,10 @@ export default function EditEvent({ auth, event, city }) {
                     <div className="flex items-center justify-between">
                         <button 
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        >
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Update Event
                         </button>
-                        <Link 
-                            href={route('events.index')}
-                            className="inline-block align-baseline font-bold text-sm text-black-500 hover:text-gray-800"
-                        >
+                        <Link href={route('events.index')} className="inline-block align-baseline font-bold text-sm text-black-500 hover:text--800">
                             Cancel
                         </Link>
                     </div>
