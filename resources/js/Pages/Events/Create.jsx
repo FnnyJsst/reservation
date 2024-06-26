@@ -1,0 +1,111 @@
+import React, { useState } from 'react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Head, Link, useForm } from '@inertiajs/react';
+
+export default function CreateEvent({ auth }) {
+    const { data, setData, post, errors } = useForm({
+        title: '',
+        date: '',
+        venue: '',
+        city: '',
+        description: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        post(route('events.store'));
+    };
+
+    return (
+        <AuthenticatedLayout user={auth.user}>
+            <Head title="Create Event" />
+
+           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
+
+                <h1 className="text-2xl font-bold mb-4">Create an Event</h1>
+
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
+                            Title
+                        </label>
+                        <input 
+                            type="text"
+                            id="title"
+                            value={data.title}
+                            onChange={e => setData('title', e.target.value)}
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="date">
+                            Date
+                        </label>
+                        <input 
+                            type="date"
+                            id="date"
+                            value={data.date}
+                            onChange={e => setData('date', e.target.value)}
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {errors.date && <p className="text-red-500 text-xs italic">{errors.date}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
+                            Venue
+                        </label>
+                        <input 
+                            type="text"
+                            id="venue"
+                            value={data.venue}
+                            onChange={e => setData('venue', e.target.value)}
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {errors.venue && <p className="text-red-500 text-xs italic">{errors.venue}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
+                            City
+                        </label>
+                        <input 
+                            type="text"
+                            id="city"
+                            value={data.city}
+                            onChange={e => setData('city', e.target.value)}
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {errors.city && <p className="text-red-500 text-xs italic">{errors.city}</p>}
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+                            Description
+                        </label>
+                        <textarea 
+                            id="description"
+                            value={data.description}
+                            onChange={e => setData('description', e.target.value)}
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        />
+                        {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <button 
+                            type="submit"
+                            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Create Event
+                        </button>
+                        <Link href={route('events.index')} className="inline-block align-baseline font-bold text-sm text-black-500 hover:text-pink-800">
+                            Cancel
+                        </Link>
+                    </div>
+                </form>
+            </div>
+        </AuthenticatedLayout>
+    );
+}
