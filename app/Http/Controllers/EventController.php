@@ -24,10 +24,19 @@ class EventController extends Controller
         return Inertia::render('Events/Create');
     }
 
+    public function show(string $id)
+    {
+        $event = Event::with(['city', 'venue'])->findOrFail($id);
+dd($event->toArray());
+        return Inertia::render('Events/Show', [
+            'event' => $event,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'city_id' => 'required|exists:cities,id',
             'venue_id' => 'required|exists:venues,id',

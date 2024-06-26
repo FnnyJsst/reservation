@@ -29,4 +29,12 @@ Route::resource('events', EventController::class)
     ->only(['index', 'store'])
     ->middleware(['auth', 'verified']);
 
+Route::get('/events/create', [EventController::class, 'create'])
+    ->middleware(['auth', 'verified'])
+    ->name('events.create');
+
+Route::get('/events/{id}', [EventController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('events.show');
+
 require __DIR__.'/auth.php';

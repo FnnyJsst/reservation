@@ -12,7 +12,7 @@ class Event extends Model
 
     // Peuvent être modifiés avec Create et Update
     protected $fillable = [
-        'name',
+        'title',
         'description',
         'city_id',
         'venue_id',

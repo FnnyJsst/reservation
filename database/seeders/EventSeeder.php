@@ -10,7 +10,7 @@ class EventSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
+/*         $faker = Faker::create();
 
         for ($i = 0; $i < 10; $i++) {
             Event::create([
@@ -20,7 +20,8 @@ class EventSeeder extends Seeder
                 'venue_id' => $faker->numberBetween(1, 5),
                 'date' => $faker->dateTimeBetween('+1 week', '+1 year'),
             ]);
-        }
+        } */
+        Event::factory()->count(10)->create();
     }
 }
 

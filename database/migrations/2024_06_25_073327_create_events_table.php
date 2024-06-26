@@ -17,9 +17,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->date('date');
-            // Si on supprime un lieu, on supprime également les évènements qui y sont rattachés
-            $table->foreignId('venue_id');//->constrained()->onDelete('cascade');
-            $table->foreignId('city_id');//->constrained()->onDelete('cascade');
+            $table->foreignId('venue_id');
+            $table->foreignId('city_id');
         });
     }
 
