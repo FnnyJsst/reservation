@@ -17,6 +17,7 @@ class EventFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(4),
+            'artists' => $this->faker->name(),
             'description' => $this->faker->paragraph(),
             'city_id' => City::factory(),//$this->faker->numberBetween(1, 10),
             'venue_id' => Venue::factory(),

@@ -17,6 +17,7 @@ class Event extends Model
         'city_id',
         'venue_id',
         'date',
+        'artists'
     ];
 
     public function city()

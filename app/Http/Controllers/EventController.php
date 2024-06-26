@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,7 +12,7 @@ class EventController extends Controller
 {
     public function index(): Response
     {
-        $events = Event::all(); // Récupère tous les événements depuis la base de données
+        $events = Event::with(['city', 'venue'])->latest()->get(); // Récupère tous les événements depuis la base de données
 
         return Inertia::render('Events/Index', [
             'events' => $events,
@@ -21,13 +22,14 @@ class EventController extends Controller
 
     public function create()
     {
-        return Inertia::render('Events/Create');
+        $city = City::with('venues')->first();
+
+        return Inertia::render('Events/Create', ['city' => $city]);
     }
 
     public function show(string $id)
     {
         $event = Event::with(['city', 'venue'])->findOrFail($id);
-//dd($event->toArray());
         return Inertia::render('Events/Show', [
             'event' => $event,
         ]);
@@ -35,9 +37,11 @@ class EventController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'artists' => 'required|string',
+
             'city_id' => 'required|exists:cities,id',
             'venue_id' => 'required|exists:venues,id',
             'date' => 'required|date',
@@ -46,7 +50,8 @@ class EventController extends Controller
             'venue_id.exists' => 'The selected venue is invalid.',
         ]);
 
-        Event::create($request->only('name', 'description', 'city_id', 'venue_id', 'date'));
+        //Event::create($request->only('title', 'description', 'city_id', 'venue_id', 'date', 'artists'));
+        Event::create($validated);
 
         return redirect()->route('events.index');
     }

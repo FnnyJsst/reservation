@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function CreateEvent({ auth, city }) {
-    
-    const { data, setData, post, errors } = useForm({
-        title: '',
-        date: '',
-        venue_id: '',
-        city_id: city.id,
-        description: '',
-        artists: ''
-    });
+export default function EditEvent({ auth, event, city }) {
 
-console.log(data);
+    const { data, setData, put, errors } = useForm({
+        title: event.title,
+        date: event.date,
+        venue_id: event.venue ? event.venue.id : '',
+        city_id: city.id,
+        description: event.description,
+        artists: event.artists
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('events.store'));
+        put(route('events.update', event.id), {
+            onSuccess: () => {
+                console.log('Event updated successfully!');
+            },
+            onError: (errors) => {
+                console.error('Error updating event:', errors);
+            }
+        });
     };
 
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Create Event" />
+            <Head title={`Edit Event - ${event.title}`} />
 
-           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
 
-                <h1 className="text-2xl font-bold mb-4">Create an Event</h1>
+                <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -54,7 +59,7 @@ console.log(data);
                             onChange={e => setData('artists', e.target.value)}
                             className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
-                        {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
+                        {errors.artists && <p className="text-red-500 text-xs italic">{errors.artists}</p>}
                     </div>
 
                     <div className="mb-4">
@@ -75,15 +80,19 @@ console.log(data);
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
                             Venue
                         </label>
-                        <select name="venue_id" id="venue" 
+                        <select 
+                            name="venue_id" 
+                            id="venue" 
+                            value={data.venue_id}
                             onChange={e => setData('venue_id', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        >
                             <option value="">Select a venue</option>
                             {city.venues.map(venue => (
                                 <option key={venue.id} value={venue.id}>{venue.name}</option>
                             ))}
                         </select>
-                        {errors.venue && <p className="text-red-500 text-xs italic">{errors.venue}</p>}
+                        {errors.venue_id && <p className="text-red-500 text-xs italic">{errors.venue_id}</p>}
                     </div>
 
                     <div className="mb-4">
@@ -91,13 +100,11 @@ console.log(data);
                             City
                         </label>
                         <p 
-                           
                             id="city"
-
-                    
                             className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        >{city.name}</p>
-                    
+                        >
+                            {city.name}
+                        </p>
                     </div>
 
                     <div className="mb-4">
@@ -116,10 +123,14 @@ console.log(data);
                     <div className="flex items-center justify-between">
                         <button 
                             type="submit"
-                            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            Create Event
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        >
+                            Update Event
                         </button>
-                        <Link href={route('events.index')} className="inline-block align-baseline font-bold text-sm text-black-500 hover:text--800">
+                        <Link 
+                            href={route('events.index')}
+                            className="inline-block align-baseline font-bold text-sm text-black-500 hover:text-gray-800"
+                        >
                             Cancel
                         </Link>
                     </div>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title');
+            $table->string('artists');
             $table->text('description');
             $table->date('date');
             $table->foreignId('venue_id');

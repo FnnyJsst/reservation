@@ -37,4 +37,8 @@ Route::get('/events/{id}', [EventController::class, 'show'])
     ->middleware(['auth', 'verified'])
     ->name('events.show');
 
+Route::get('/events/{id}/edit', [EventController::class, 'edit'])
+    ->middleware(['auth', 'verified'])
+    ->name('events.edit');
+
 require __DIR__.'/auth.php';

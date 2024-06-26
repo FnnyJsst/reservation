@@ -2,14 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\City;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Venue;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\City>
  */
-class VenueFactory extends Factory
+class ArtistsFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,8 +17,7 @@ class VenueFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->secondaryAddress(),
-            'city_id' => City::factory()
+            'name' => $this->faker->name(),
         ];
     }
 }
