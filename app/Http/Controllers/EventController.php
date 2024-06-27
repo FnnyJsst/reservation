@@ -70,7 +70,7 @@ class EventController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'city_id' => 'required|exists:cities,id',
             'venue_id' => 'required|exists:venues,id',
@@ -81,7 +81,7 @@ class EventController extends Controller
         ]);
 
         $event = Event::findOrFail($id);
-        $event->update($request->only('name', 'description', 'city_id', 'venue_id', 'date'));
+        $event->update($request->only('title', 'description', 'city_id', 'venue_id', 'date'));
 
         return redirect()->route('events.index');
     }

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
 
 export default function EditEvent({ auth, event, venues, cities }) {
     
-    const { data, setData, put, errors } = useForm({
+    const { data, setData, patch, errors } = useForm({
         title: event.title,
         date: event.date,
         venue_id: event.venue_id,
@@ -13,11 +13,9 @@ export default function EditEvent({ auth, event, venues, cities }) {
         artists: event.artists
     });
 
-    console.log(event);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('events.update', event.id), {
+        patch(route('events.update', event.id), {
             onSuccess: () => {
                 // Handle success if needed
             },
@@ -31,8 +29,7 @@ export default function EditEvent({ auth, event, venues, cities }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title={`Edit ${event.title}`} />
 
-           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
-
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-4 mb-4 mt-8">
                 <h1 className="text-2xl font-bold mb-4">Edit Event</h1>
 
                 <form onSubmit={handleSubmit}>
@@ -77,14 +74,7 @@ export default function EditEvent({ auth, event, venues, cities }) {
                         />
                         {errors.date && <p className="text-red-500 text-xs italic">{errors.date}</p>}
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="cities">
-                            City
-                        </label>
-                        <p id="cities" className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            {cities.name}
-                        </p>
-                    </div>
+
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
                             Venue
@@ -100,6 +90,7 @@ export default function EditEvent({ auth, event, venues, cities }) {
                         </select>
                         {errors.venue_id && <p className="text-red-500 text-xs italic">{errors.venue_id}</p>}
                     </div>
+
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                             Description
