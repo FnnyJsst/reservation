@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('date');
             $table->foreignId('venue_id');
             $table->foreignId('city_id');
+
         });
     }
 
