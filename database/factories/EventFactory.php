@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\City;
 use App\Models\Event;
 use App\Models\Venue;

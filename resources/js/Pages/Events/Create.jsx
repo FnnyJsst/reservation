@@ -38,7 +38,7 @@ console.log(data);
                             id="title"
                             value={data.title}
                             onChange={e => setData('title', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
                     </div>
@@ -52,7 +52,7 @@ console.log(data);
                             id="artist"
                             value={data.artists}
                             onChange={e => setData('artists', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {errors.title && <p className="text-red-500 text-xs italic">{errors.title}</p>}
                     </div>
@@ -66,7 +66,7 @@ console.log(data);
                             id="date"
                             value={data.date}
                             onChange={e => setData('date', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {errors.date && <p className="text-red-500 text-xs italic">{errors.date}</p>}
                     </div>
@@ -74,17 +74,17 @@ console.log(data);
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
                             City
                         </label>
-                        <p id="city" className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <p id="city" className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             {city.name}
                         </p>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="venue">
+                        <label className="block text-slate-400 text-sm font-bold mb-2" htmlFor="venue">
                             Venue
                         </label>
                         <select name="venue_id" id="venue" 
                             onChange={e => setData('venue_id', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <option value="">Select a venue</option>
                             {city.venues.map(venue => (
                                 <option key={venue.id} value={venue.id}>{venue.name}</option>
@@ -100,7 +100,7 @@ console.log(data);
                             id="description"
                             value={data.description}
                             onChange={e => setData('description', e.target.value)}
-                            className="shadow appearance-none border-gray rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border-slate-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         />
                         {errors.description && <p className="text-red-500 text-xs italic">{errors.description}</p>}
                     </div>
@@ -108,7 +108,7 @@ console.log(data);
                     <div className="flex items-center justify-between">
                         <button 
                             type="submit"
-                            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Create Event
                         </button>
                         <Link href={route('events.index')} className="inline-block align-baseline font-bold text-sm text-black-500 hover:text--800">

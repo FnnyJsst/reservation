@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use App\Models\Event;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -11,7 +12,7 @@ class EventController extends Controller
 {
     public function index(Request $request): Response
     {
-        $query = Event::with(['city', 'venue']);
+        $query = Event::with(['city', 'venue', 'tags']);
 
         if ($request->filled('city')) {
             $query->whereHas('city', function($q) use ($request) {
@@ -57,6 +58,7 @@ class EventController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'category_id' => 'required|exists:categories,id',
             'artists' => 'required|string',
             'city_id' => 'required|exists:cities,id',
             'venue_id' => 'required|exists:venues,id',
@@ -73,12 +75,13 @@ class EventController extends Controller
 
     public function edit(string $id)
     {
-        $event = Event::with(['city', 'venue'])->findOrFail($id);
+        $event = Event::with(['city.venues', 'venue'])->findOrFail($id);
 
         return Inertia::render('Events/Edit', [
+            'categories' => Category::all(), // Add this line
             'event' => $event,
-            'venues' => $event->city->venues()->get(),
-            'cities' => City::all(),
+            //'venues' => $event->city->venues()->get(),
+            'cities' => City::with('venues')->get(),
         ]);
     }
 

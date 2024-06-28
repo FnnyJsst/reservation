@@ -2,8 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\City;
 use Illuminate\Database\Seeder;
 use App\Models\Event;
+use App\Models\Tag;
+use App\Models\Venue;
 use Faker\Factory as Faker;
 
 class EventSeeder extends Seeder
@@ -21,7 +25,23 @@ class EventSeeder extends Seeder
                 'date' => $faker->dateTimeBetween('+1 week', '+1 year'),
             ]);
         } */
-        Event::factory()->count(10)->create();
+        $tags = collect();
+        foreach(['Humour', 'Fantastique', 'Contemporain', 'Classique'] as $tag) {
+            $tags->push(Tag::create([
+                'name' => $tag
+            ]));
+        }
+
+        $cities = City::factory(10)->has(Venue::factory()->count(5))->create();
+        
+        Event::factory()
+            ->count(10)
+            ->recycle($cities)
+            ->create()
+            ->each(function (Event $event) use ($tags) {
+                $event->tags()->attach($tags->random(2)->pluck('id'));
+            })
+        ;
     }
 }
 

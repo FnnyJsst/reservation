@@ -21,7 +21,6 @@ export default function Index({ auth, events, filters }) {
         e.preventDefault();
         axios.get(route('events.index'), { params: search })
             .then(response => {
-                // Rediriger vers l'index avec les paramètres de recherche
                 window.location.href = route('events.index', search);
             });
     };
@@ -43,8 +42,8 @@ export default function Index({ auth, events, filters }) {
 
             <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
                 <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-2xl font-bold">All Events</h1>
-                    <Link href={route('events.create')} className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
+                    <h1 className="text-2xl font-bold">Events</h1>
+                    <Link href={route('events.create')} className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded">
                         Create an Event
                     </Link>
                 </div>
@@ -57,7 +56,7 @@ export default function Index({ auth, events, filters }) {
                             value={search.city}
                             onChange={handleSearchChange}
                             placeholder="Search by city"
-                            className="border rounded py-2 px-3"
+                            className="border-slate-400 rounded-md py-2 px-3"
                         />
                         <input
                             type="text"
@@ -65,7 +64,7 @@ export default function Index({ auth, events, filters }) {
                             value={search.artist}
                             onChange={handleSearchChange}
                             placeholder="Search by artist"
-                            className="border rounded py-2 px-3"
+                            className="border-slate-400 rounded-md py-2 px-3"
                         />
                         <input
                             type="text"
@@ -73,11 +72,11 @@ export default function Index({ auth, events, filters }) {
                             value={search.venue}
                             onChange={handleSearchChange}
                             placeholder="Search by venue"
-                            className="border rounded py-2 px-3"
+                            className="border-slate-400 rounded-md py-2 px-3"
                         />
                         <button
                             type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            className="bg-slate-500 hover:bg-slate-600 text-white font-bold py-2 px-4 rounded"
                         >
                             Search
                         </button>
@@ -89,7 +88,7 @@ export default function Index({ auth, events, filters }) {
                 )}
 
                 {events.map(event => (
-                    <div key={event.id} className="bg-white rounded-lg shadow-md p-4 mb-4">
+                    <div key={event.id} className="bg-white rounded-xl shadow-md p-4 mb-4">
                         <h2 className="text-xl font-bold mb-2">{event.title}</h2>
                         {event.image && (
                             <img src={`/storage/${event.image}`} alt={event.title} className="mb-2" />
@@ -98,23 +97,30 @@ export default function Index({ auth, events, filters }) {
                         <p className="text-gray-600 mb-2">{event.venue.name}</p>
                         <p className="text-gray-600 mb-2">{event.city.name}</p>
                         <p className="mb-4">{event.description}</p>
+                        <div className="text-gray-600 mb-2">
+                            {event.tags.map(category => (
+                                <span key={category.id} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                                    {category.name}
+                                </span>
+                            ))}
+                        </div>
 
                         <div className="flex justify-end space-x-2">
                             <Link
                                 href={route('events.show', event.id)}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+                                className="bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded"
                             >
                                 View
                             </Link>
                             <Link
                                 href={route('events.edit', event.id)}
-                                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                                className="bg-pink-300 hover:bg-pink-400 text-white font-bold py-2 px-4 rounded"
                             >
                                 Edit
                             </Link>
                             <button
                                 onClick={() => deleteEvent(event.id)}
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                                className="bg-slate-400 hover:bg-slate-500 text-white font-bold py-2 px-4 rounded"
                             >
                                 Delete
                             </button>

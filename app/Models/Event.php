@@ -35,10 +35,6 @@ class Event extends Model
         return $this->belongsToMany(Artist::class);
     }
 
-    public function categories()
-    {
-        return $this->belongsToMany(Category::class);
-    }
 
     public function tags()
     {
